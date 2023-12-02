@@ -1,0 +1,25 @@
+# main:
+00/ 8c110064 0011482a 00008025
+# per:
+03/ 12200006 8e240064 8e250069 
+# jump mult
+06/ 0800000c
+# return_mult:
+07/ 02068020 02298822 1000fff9 
+# fiper:
+0a/ ac10006f
+# fi:
+0b/ 1210ffff
+
+# mult: # multiplica a0 * a1, a0 ha de ser positiu retorna a $a2
+0c/ 00003024
+# perj:
+0d/ 10800003 00c53020 00892022 1000fffc 
+# fiperj:      jump return_mult
+11/ 08000007 
+
+# DATA IN MEMORY
+64/ 5
+65/ 1 2 3 4 5
+6a/ 1 0 ffffffff 2 fffffffe
+6f/ 0

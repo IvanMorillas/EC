@@ -1,0 +1,40 @@
+#main:
+00/ 8c090064 # <input:1> lw $t1, 100($zero) # carrega la constant "1"
+01/ 8c0a0065 # <input:2> lw $t2, 101($zero) # carrega 256 (0x100)
+02/ 8c100066 # <input:3> lw $s0, 102($zero) # carrega @missatge
+# <mentre_no_null> ; <input:6> mentre_no_null:
+03/ 8e080000 # <input:7> lw $t0, 0($s0) #llegim caracter de l'string
+04/ 11000003 # <input:8> beq $t0, $zero, fi_no_null # sortim del bucle
+05/ ac08ffff # <input:9> sw $t0, 65535($zero) # escrivim caracter al TTY
+06/ 02098020 # <input:10> add $s0, $s0, $t1 # increment index string
+07/ 08000003 # <input:11> j mentre_no_null # fi_bucle
+# <fi_no_null> ; <input:12> fi_no_null:
+# <mentre_sempre> ; <input:15> mentre_sempre:
+08/ 8c04ffff # <input:17> lw $a0, 65535($zero) # llegim tecla
+09/ 008a4024 # <input:18> and $t0, $a0,$t2 # mirem si s'ha pitjat (bit 9 a '1')
+0a/ 1100fffd # <input:19> beq $t0, $zero, mentre_sempre # no hi tecla continuem
+0b/ ac04ffff # <input:20> sw $a0, 65535($zero) # print de tecla
+0c/ 08000008 # <input:21> j mentre_sempre # jump per
+# <fi> ; <input:24> fi: # per si de cas
+0d/ 1000ffff # <input:25> beq $zero, $zero, fi # bucle infinit
+
+# DATA IN MEMORY
+64/ 00000001 	# 0x1   un u.
+65/ 00000100	# 0x100 (256) mascara lectura tecla
+66/ 00000070 	# adreça del missatge 'amissatge'
+
+# missatge
+70/ 50 72 6f 67 # Prog
+74/ 72 61 6d 61 # rama
+78/ 20 27 65 63 # 'ec
+7c/ 68 6f 27 3a # ho':
+80/ 20 4c 65 73 # Les
+84/ 20 74 65 63 # tec
+88/ 6c 65 73 20 # les
+8c/ 70 69 74 6a # pitj
+90/ 61 64 65 73 # ades
+94/ 20 73 6f 72 # sor
+98/ 74 69 72 61 # tira
+9c/ 6e 20 70 65 # n pe
+a0/ 6c 20 54 54 # l TT
+a4/ 59 0a 00 	# Y\n\0
